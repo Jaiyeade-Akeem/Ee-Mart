@@ -9,34 +9,37 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Date;
-import java.util.UUID;
 
-@Entity @Getter @Setter @Builder @AllArgsConstructor
-@Table(name = "tokens")
-public class AuthenticationToken {
-
+@Entity @AllArgsConstructor @Getter @Setter @Builder
+@Table(name="cart")
+public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Integer id;
-
-    private String token;
 
     @Column(name = "created_date")
     private Date createdDate;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "user_id")
     private User user;
 
-    public AuthenticationToken(User user) {
-        this.user = user;
-        this.createdDate = new Date();
-        this.token = UUID.randomUUID().toString();
+    private int quantity;
+
+    public Cart() {
     }
-    public AuthenticationToken() {
+
+    public Cart(Product product, int quantity, User user){
+        this.user = user;
+        this.product = product;
+        this.quantity = quantity;
+        this.createdDate = new Date();
     }
 }

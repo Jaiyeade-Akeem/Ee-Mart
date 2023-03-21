@@ -1,5 +1,8 @@
 package com.example.eemart.controller;
 
+import com.example.eemart.exceptions.CustomException;
+import com.example.eemart.pojos.SignInDto;
+import com.example.eemart.pojos.SignInResponseDto;
 import com.example.eemart.pojos.SignUpResponseDto;
 import com.example.eemart.pojos.SignupDto;
 import com.example.eemart.service.UserService;
@@ -21,5 +24,9 @@ public class UserController {
     @PostMapping("/signup")
     public SignUpResponseDto signup(@RequestBody SignupDto signupDto) throws NoSuchAlgorithmException {
         return userService.signUp(signupDto);
+    }
+    @PostMapping("/signIn")
+    public SignInResponseDto Signup(@RequestBody SignInDto signInDto) throws CustomException, NoSuchAlgorithmException {
+        return userService.signIn(signInDto);
     }
 }
