@@ -71,4 +71,8 @@ public class CartServiceImpl implements CartService {
         cartRepository.deleteById(cartItemId);
         return new ResponseEntity<>("Cart deleted successfully", HttpStatus.OK);
     }
+    @Override
+    public void deleteUserCartItems(User user) {
+        cartRepository.deleteByUser(user);
+    }
 }
